@@ -1,0 +1,28 @@
+﻿@{
+
+    var componentNameList = ViewData["componentNameList"] as List<String>;
+}
+
+<h1>Compontent List</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Nome componente</th>
+            <th scope="col">Azioni</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (string componentName in componentNameList)
+            {
+                <tr>
+                    <td>@componentName</td>
+                    <td>
+                        <a href="@Url.Action("ToggleComponent","Admin",new { name = componentName })">Installa</a>
+                        <a href="@Url.Action("UninstallComponent","Admin",new { name = componentName })">Disinstalla</a>
+                    </td>
+               
+                </tr>
+            }
+    </tbody>
+</table>
