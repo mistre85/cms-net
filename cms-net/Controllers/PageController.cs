@@ -39,16 +39,13 @@ namespace cms_net.Controllers
         // POST: PageController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Page p)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+
+            _context.Pages.Add(p);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         // GET: PageController/Edit/5

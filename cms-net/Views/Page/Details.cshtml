@@ -20,7 +20,7 @@
 </div>
 @foreach(Component c in Model.Components)
 {
-    @Html.Partial($"Components/{c.ComponentDefinitionKey}/view",c);
+    @Html.Partial($"Components/{c.ComponentDefinitionKey}/_View",c);
 }
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
