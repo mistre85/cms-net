@@ -9,8 +9,7 @@ namespace cms_net.Models
 
         public List<Field>? fields { get; set; }
 
-        [ForeignKey("ComponentDefintionKey")]
-        public string Key { get; set; }
+        public string ComponentDefinitionKey { get; set; }
         public ComponentDefinition ComponentDefinition { get; set; }
 
         public int PageId { get; set; }
@@ -24,7 +23,7 @@ namespace cms_net.Models
 
         public Component(string key)
         { 
-            Key = key;
+            ComponentDefinitionKey = key;
         }
     }
 }

@@ -8,9 +8,9 @@ namespace cms_net.Models
         [Key]
         public string Key { get; set; }
 
-        public ComponentDefinition()
+        public ComponentDefinition(string key)
         {
-
+            Key = key;
         }
     }
 }

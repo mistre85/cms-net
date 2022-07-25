@@ -1,0 +1,37 @@
+﻿@model string[]
+
+@{
+    ViewData["Title"] = "Create";
+    string key = (string)ViewData["key"];
+    int pageId = (int)ViewData["pageId"];
+}
+
+<h1>Crea nuovo componente</h1>
+
+<h4>@key</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" asp-route-id="@pageId" asp-route-key="@key" >
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @foreach(string item in Model){
+                <div class="form-group">
+                    <label class="control-label">@item</label>
+                    <input name="@item" class ="form-control" />
+                </div>
+            }
+       
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

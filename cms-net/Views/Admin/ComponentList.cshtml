@@ -1,4 +1,5 @@
-﻿@{
+﻿@using cms_net.Utils
+@{
 
     var componentNameList = ViewData["componentNameList"] as List<String>;
 }
@@ -13,16 +14,23 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (string componentName in componentNameList)
-            {
+        @foreach (string componentName in componentNameList){
+           
                 <tr>
                     <td>@componentName</td>
                     <td>
-                        <a href="@Url.Action("ToggleComponent","Admin",new { name = componentName })">Installa</a>
-                        <a href="@Url.Action("UninstallComponent","Admin",new { name = componentName })">Disinstalla</a>
-                    </td>
+                    @if (ComponentHelper.isComponentInstalled(componentName))
+                    {
+                          <a href="@Url.Action("UninstallComponent","Admin",new { name = componentName })">Disinstalla</a>
+                       
+                    }
+                    else
+                    {
+                       <a href="@Url.Action("InstallComponent","Admin",new { name = componentName })">Installa</a>
+                    }
+                     </td>
                
                 </tr>
-            }
+        }
     </tbody>
 </table>

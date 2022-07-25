@@ -1,8 +1,0 @@
-﻿{
-    fields: [
-        "title",
-        "description",
-        "image"
-    ]
-}
-

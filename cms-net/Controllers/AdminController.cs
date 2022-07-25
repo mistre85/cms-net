@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using cms_net.Context;
+using cms_net.Models;
+using cms_net.Utils;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -21,37 +24,53 @@ namespace cms_net.Controllers
         public IActionResult ComponentList()
         {
 
-            //1.    leggere la lista della sottocartelle di /Views/Components 
-
-            //todo: mettere cartella relativa e non assoluta
-            string component_path = "/Users/mistre/Projects/cms-net/cms-net/Views/Page/Components";
-
-            //todo: gestire exception su mancaze dir
-            string[] dirs = Directory.GetDirectories(component_path, "*", SearchOption.TopDirectoryOnly);
-
-            List<string> componentNameList = new List<string>();
-
-            foreach (string dir in dirs)
+            
+            try
             {
-                string[] dirSplit = dir.Split("/");
-                string componentName = dirSplit.Last();
+                
+                ViewData["componentNameList"] = ComponentHelper.GetComponentDirectoryList();
 
-                componentNameList.Add(componentName);
+            }
+            catch (DirectoryNotFoundException e)
+            {
+                ViewData["error"] = "Impossibile trovare la dei componenti al path " + ComponentHelper.COMPONENT_PATH;
             }
 
-            ViewData["componentNameList"] = componentNameList;
 
             return View();
+
         }
 
 
 
         public IActionResult InstallComponent(string name)
         {
+ 
+            CMSContext ctx = new CMSContext();
+            ComponentDefinition cd = new ComponentDefinition(name);
+
+            ctx.ComponentsDefinitions.Add(cd);
+
+            ctx.SaveChanges();
 
 
+            return RedirectToAction("ComponentList");
 
-            return View();
+        }
+
+        public IActionResult UninstallComponent(string name)
+        {
+
+
+            CMSContext ctx = new CMSContext();
+            ComponentDefinition cd = ctx.ComponentsDefinitions.Where(cd => cd.Key == name).FirstOrDefault();
+
+            ctx.ComponentsDefinitions.Remove(cd);
+
+            ctx.SaveChanges();
+
+
+            return RedirectToAction("ComponentList");
 
         }
     }

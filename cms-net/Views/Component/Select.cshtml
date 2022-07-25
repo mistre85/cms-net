@@ -1,0 +1,30 @@
+﻿@model IEnumerable<cms_net.Models.ComponentDefinition>
+
+@{
+    ViewData["Title"] = "View";
+    int pageId = (int)ViewData["pageId"];
+}
+
+<h1>Seleziona il componente da aggiungere</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nome componente</th>
+             <th>Azione</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @item.Key
+            </td>
+            <td>
+                <a href="@Url.Action("Create","Component",new {key = @item.Key, pageId = pageId})">Aggiungi alla pagina</a>
+            </td>
+        </tr>
+
+}
+    </tbody>
+</table>

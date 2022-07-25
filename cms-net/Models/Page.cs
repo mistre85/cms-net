@@ -1,4 +1,5 @@
-﻿using System;
+﻿using cms_net.Context;
+using System;
 namespace cms_net.Models
 {
     public class Page
@@ -7,10 +8,11 @@ namespace cms_net.Models
 
         public string Title { get; set; }
 
-        public List<Component>? components { get; set; }
+        public List<Component>? Components { get; set; }
 
         public Page()
         {
+            
         }
 
         public Page(string title)

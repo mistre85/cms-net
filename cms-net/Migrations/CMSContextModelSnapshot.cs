@@ -33,10 +33,6 @@ namespace cms_net.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Key")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("PageId")
                         .HasColumnType("int");
 
@@ -67,12 +63,20 @@ namespace cms_net.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("ComponentId1")
+                    b.Property<int>("ComponentId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ComponentId1");
+                    b.HasIndex("ComponentId");
 
                     b.ToTable("Fields");
                 });
@@ -103,7 +107,7 @@ namespace cms_net.Migrations
                         .IsRequired();
 
                     b.HasOne("cms_net.Models.Page", "Page")
-                        .WithMany("components")
+                        .WithMany("Components")
                         .HasForeignKey("PageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -117,7 +121,7 @@ namespace cms_net.Migrations
                 {
                     b.HasOne("cms_net.Models.Component", "Component")
                         .WithMany("fields")
-                        .HasForeignKey("ComponentId1")
+                        .HasForeignKey("ComponentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -131,7 +135,7 @@ namespace cms_net.Migrations
 
             modelBuilder.Entity("cms_net.Models.Page", b =>
                 {
-                    b.Navigation("components");
+                    b.Navigation("Components");
                 });
 #pragma warning restore 612, 618
         }

@@ -4,7 +4,7 @@
 
 namespace cms_net.Migrations
 {
-    public partial class FirstMigratino : Migration
+    public partial class FirstMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -38,7 +38,6 @@ namespace cms_net.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Key = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ComponentDefinitionKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     PageId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -65,14 +64,16 @@ namespace cms_net.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ComponentId1 = table.Column<int>(type: "int", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ComponentId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Fields", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Fields_Components_ComponentId1",
-                        column: x => x.ComponentId1,
+                        name: "FK_Fields_Components_ComponentId",
+                        column: x => x.ComponentId,
                         principalTable: "Components",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -89,9 +90,9 @@ namespace cms_net.Migrations
                 column: "PageId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Fields_ComponentId1",
+                name: "IX_Fields_ComponentId",
                 table: "Fields",
-                column: "ComponentId1");
+                column: "ComponentId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
